@@ -1,0 +1,46 @@
+# The whitelist for tags (and their abbreviated form)
+# The keys are in fact playlist names.
+
+"Feat: Nice Beat": Beat
+"Feat: Nice Piano": Piano
+"Feat: Nice String": String
+"G: Bass": (Bass)
+"G: Drum'n'Bass": "(Drum'n'Bass)"
+"G: Dubstep": (Dubstep)
+"G: Hard": (Hard)
+"G: House": (House)
+"G: Kawaii Bass": "(Kawaii Bass)"
+"G: Trance": (Trance)
+"G: Trap": (Trap)
+"Genre: Classical": Classical
+"Genre: Country": Country
+"Genre: Dance / Electronic": Dance/Electronic
+"Genre: Hip-hop / Rap": Hip-hop/Rap
+"Genre: R&B / Soul": R&B/Soul
+"Genre: Rock": Rock
+"List: Cantonese": Cantonese
+"List: English": English
+"List: French": French
+"List: Japanese": Japanese
+"List: Korean": Korean
+"List: Mandarin": Mandarin
+"List: Taiwanese": Taiwanese
+"Mood: Chill": Chill
+"Mood: Light Me Up": Fresh
+"Mood: Summer Vibes": Summer
+"Mood: Uplifting": Uplifting
+"OST: Anime": Anime
+"OST: Arcaea": Arcaea
+"OST: Cities: Skylines": "Cities: Skylines"
+"OST: Cytus II": Cytus
+"OST: Dancing Line": "Dancing Line"
+"OST: Deemo I & II": Deemo
+"OST: Friday Night Funkin’": "Friday Night Funkin'"
+"OST: Japanese Drama": "Japanese Drama"
+"OST: Phigros": Phigros
+"OST: Taipei Metro": "Taipei Metro"
+"Pure: Comfy": Comfy
+"Sub: Acoustic D & E": "Acoustic Dance/Electronic"
+"Sub: Kawaii Bass": "Kawaii Bass"
+"Sub: Melodic Dubstep": "Melodic Dubstep"
+"Temporary Loops": Temporary
