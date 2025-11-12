@@ -1,3 +1,3 @@
 from .library import Library
-from .accessor import PlaylistAccessor
+from .playlist import PlaylistAccessor
 from .utils import Utils

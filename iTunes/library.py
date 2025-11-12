@@ -1,8 +1,11 @@
+from .utils import Utils
 from collections import defaultdict
+from datetime import timedelta
 import msgpack
 import os
 import pandas as pd
 import plistlib
+from rapidfuzz import fuzz
 import re
 from typing import Any, Iterable
 
@@ -21,6 +24,21 @@ class Library:
             return f'iTunes Library <invalid>'
     
     __name__ = 'Library'
+
+    @property
+    def artists(self: 'Library') -> pd.Series[str]:
+        '''
+        The series of track artists.
+        '''
+        artists: pd.Series = self.__df__['Artist']
+
+        if Utils.get_type(artists) == '<class \'list\'>':
+            artists = pd.Series(artists.explode().unique(), name = 'Artist').astype(str)
+
+        else:
+            artists = pd.Series(artists.unique(), name = 'Artist').astype(str)
+
+        return Utils.custom_sort_values(artists)
 
     @property
     def data(self: 'Library') -> pd.DataFrame:
@@ -135,17 +153,14 @@ class Library:
         Retrieve the chart of artists, where the score is weighted by play counts and duration.
         '''
 
-        artists = [artist for artistPair in self.__df__['Artists'].to_list() for artist in artistPair]
-        artist_sorted = sorted(artists)
-        chart_df = pd.Series(artist_sorted, name='Artists').value_counts().reset_index()
-
+        chart_df = self.__df__['Artist'].explode().value_counts().reset_index()
         chart_df.columns = pd.Index(['Artist', 'Occurance'])
-        artist_score = {}
+        artist_score: dict[str, float] = {}
 
         for _, row in self.__df__.iterrows():
-            artists = row['Artists']
-            play_count = row['Play Count']
-            total_time = row['Total Time']
+            artists: list[str] | str = row['Artist']
+            play_count: int = row['Play Count']
+            total_time: timedelta = row['Total Time']
 
             if not artists or pd.isna(play_count) or pd.isna(total_time):
                 continue
@@ -153,10 +168,15 @@ class Library:
             # Weighted score = Σ_i^n (ArtistOccurance_i (=1 if present, =0 if not present) *  PlayCount_i * TotalTime_i / NumberOfArtists_i)
             #                  where i is the index of the song in the dataframe, n is the number of songs.
 
-            num_artists = len(artists)
-            score = play_count * total_time.total_seconds() / num_artists
-            for artist in artists:
-                artist_score[artist] = artist_score.get(artist, 0) + score
+            if isinstance(artists, list):
+                num_artists = len(artists)
+                score = play_count * total_time.total_seconds() / num_artists
+                for artist in artists:
+                    artist_score[artist] = artist_score.get(artist, 0) + score
+            
+            else:
+                score = play_count * total_time.total_seconds()
+                artist_score[artists] = artist_score.get(artists, 0) + score
 
         weighted_df = pd.DataFrame([
             {'Artist': artist, 'Score': round(score, 2)} for artist, score in artist_score.items()
@@ -250,23 +270,31 @@ class Library:
         def extract_artists(row: pd.Series) -> list[str]:
             artist_field = row.get('Artist', '')
             title_field = row.get('Name', '')
-            main = split_artist(artist_field)
-            feat = extract_feat_artist(title_field)
-            mapped = []
-            for artist in main + feat:
-                mapped_artist = table.get(artist, artist)
-                if isinstance(mapped_artist, list):
-                    mapped.extend(mapped_artist)
-                else:
-                    mapped.append(mapped_artist)
-            seen = set()
-            unique = []
-            for artist in mapped:
-                if artist not in seen:
-                    seen.add(artist)
-                    unique.append(artist)
+
+            if isinstance(artist_field, str) and isinstance(title_field, str):
+                main = split_artist(artist_field)
+                feat = extract_feat_artist(title_field)
+                mapped = []
+                for artist in main + feat:
+                    mapped_artist = table.get(artist, artist)
+                    if isinstance(mapped_artist, list):
+                        mapped.extend(mapped_artist)
+                    else:
+                        mapped.append(mapped_artist)
+                seen = set()
+                unique = []
+                for artist in mapped:
+                    if artist not in seen:
+                        seen.add(artist)
+                        unique.append(artist)
+                
+                return unique
             
-            return unique
+            elif isinstance(artist_field, list):
+                return artist_field
+            
+            else:
+                raise ValueError('The artist field must be strings or list of strings.')
 
         def extract_feat_artist(title: str) -> list[str]:
             non_artist = {'vip mix', 'vip remix', 'house remix', 'dance remix', 'night beat remix', 'remix', 'mix'}
@@ -301,6 +329,46 @@ class Library:
         new_lib = self.copy()
         new_lib.__df__['Artist'] = new_lib.__df__.apply(extract_artists, axis = 1)
         return new_lib
+
+    def search(self: 'Library', q: str, columns: str | list[str] | None = None, contains: bool = True) -> pd.DataFrame:
+        '''
+        Search in the iTunes library.
+        '''
+        if not self.is_valid():
+            raise ValueError('The library is corrupted.')
+        
+        if isinstance(columns, str) and columns in self.__df__.columns:
+            cols = [columns]
+
+        elif isinstance(columns, list):
+            cols = list(set(columns) & set(self.__df__.columns))
+            if not cols:
+                cols = self.__df__.select_dtypes(include=['object']).columns.tolist()
+        
+        else:
+            cols = self.__df__.select_dtypes(include=['object']).columns.tolist()
+
+        q_norm = Utils.normalize_value(q)
+        score_df = pd.DataFrame(index = self.__df__.index)
+
+        for col in cols:
+            normalized_col = self.__df__[col].map(lambda x: Utils.normalize_value(x))
+
+            if contains:
+                score_df[col + '_score'] = normalized_col.map(lambda x: 100 if q_norm in x else 0)
+
+            else:
+                score_df[col + '_score'] = normalized_col.map(lambda x: fuzz.ratio(q_norm, Utils.normalize_value(x)))
+
+        score_df['FinalScore'] = score_df.max(axis=1)
+        
+        if contains:
+            score_df = score_df[score_df['FinalScore'] > 0]
+        else:
+            score_df = score_df[score_df['FinalScore'] >= 50]
+        
+        score_df = score_df.sort_values(by='FinalScore', ascending = False)
+        return self.__df__.copy().loc[score_df.index].reset_index(drop = True)
 
     def to_csv(self: 'Library',
                path: str | bytes | os.PathLike[str]) -> None:
