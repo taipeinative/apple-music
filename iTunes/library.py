@@ -1,5 +1,5 @@
 from .utils import Utils
-from collections import defaultdict
+from collections import abc, defaultdict
 from datetime import timedelta
 import msgpack
 import os
@@ -46,6 +46,43 @@ class Library:
         The iTunes library data.
         '''
         return self.__df__.copy()
+
+    @classmethod
+    def from_excel(cls, path: str | bytes | os.PathLike[str], sheet: str | int) -> 'Library':
+        '''
+        Read a library from a Microsoft Excel file.
+        '''
+
+        def to_tuple(row: pd.Series) -> tuple:
+            return row['Sub Tag 1'], row['Sub Tag 2'], row['Sub Tag 3']
+        
+        legacy_columns = ['Top Level', 'Second Level', 'Third Level']
+        column_sets = ['Track ID', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Date Modified', 'Date Added', 'Play Count', 'Size', 'Total Time', 'Disc Number', 'Track Number', 'Vocal', 'Language', 'Sub Genres', 'Sub Tags']
+        data = pd.read_excel(path, sheet_name = sheet, header = 0)
+
+        if len(set(legacy_columns) & set(data.columns)) > 0:
+            template = pd.DataFrame(columns = column_sets).astype({
+                'Track ID': 'int64',
+                'Year': 'int64',
+                'Date Modified': 'datetime64[ns]',
+                'Date Added': 'datetime64[ns]',
+                'Play Count': 'int64',
+                'Size': 'int64',
+                'Total Time': 'timedelta64[ns]',
+                'Disc Number': 'int64',
+                'Track Number': 'int64'
+            })
+
+            data.rename(columns = {'Artists': 'Artist'}, errors = 'ignore', inplace = True)
+            data.drop(columns = ['Rating'], errors = 'ignore', inplace = True)
+            data = pd.concat([template, data], ignore_index = True)
+
+            data['Vocal'] = data.get('Top Level', data['Vocal'])
+            data['Language'] = data.get('Second Level', data['Language'])
+            data['Sub Genres'] = data.get('Third Level', data['Sub Genres'])
+            
+        data['Sub Tags'] = data.apply(to_tuple, axis = 1)
+        return Library(data[column_sets].copy())
 
     @classmethod
     def from_msgpack(cls, path: str | bytes | os.PathLike[str]) -> 'Library':
@@ -147,6 +184,131 @@ class Library:
         
         else:
             raise ValueError('Invalid path.')
+
+    @classmethod
+    def merge(cls, prev: 'Library', next: 'Library',
+              artist_map: dict[str, str | list[str]] = {},
+              artists_with_comma: list[str] = [],
+              name_map: dict[str, dict[str, str] | list[dict[str, str | list[str]]]] = {}) -> LibraryMerger:
+        '''
+        Try to merge two iTunes libraries.
+        '''
+
+        def create_key_column(df: pd.DataFrame, source: str, key: str) -> pd.DataFrame:
+            df = df.copy()
+            df[key] = df[source].apply(
+                lambda x: ','.join(sorted(x)) if isinstance(x, list) else str(x)
+            )
+            return df
+
+        def drop_key_column(key: str, dfs: list[pd.DataFrame]) -> None:
+            for df in dfs:
+                df.drop(columns = [key], errors = 'ignore', inplace = True)
+
+        def get_rename_map(cols: list[str]) -> tuple[dict[str, str], dict[str, str], dict[str, str]]:
+            n_series = {}
+            p_series = {}
+            x_series = {}
+            for col in cols:
+                n_series[f'{col}_n'] = col
+                p_series[f'{col}_p'] = col
+                x_series[f'{col}_x'] = col
+            return n_series, p_series, x_series
+
+        def handle_artists(lib: 'Library') -> pd.DataFrame:
+            def flatten_replace(arr: list[str]) -> list[str]:
+                result = []
+                for x in arr:
+                    val = artist_map.get(x, x)
+                    if isinstance(val, list):
+                        result.extend(val)
+                    else:
+                        result.append(val)
+                return result
+            
+            artists = lib.__df__['Artist']
+            artists_type = Utils.get_type(artists)
+            if artists_type == '<class \'list\'>':
+                lib.__df__['Artist'] = artists.apply(flatten_replace)
+            if artists_type == '<class \'str\'>':
+                lib = lib.nested_artists(artist_map, artists_with_comma)
+
+            return lib.__df__
+        
+        def handle_names(df: pd.DataFrame) -> pd.DataFrame:
+            def is_equal(source: str | list, target: str | list) -> bool:
+                return set(to_list(source)) == set(to_list(target))
+            
+            def row_replace(row: pd.Series) -> str:
+                replacers = name_map.get('complex', [])
+                assert isinstance(replacers, list)
+                for r in replacers:
+                    r_artist = r.get('artist', [])
+                    r_alias = to_list(r.get('alias', []))
+                    if is_equal(row['Artist'], r_artist):
+                        if row['Name'] in r_alias:
+                            return str(r.get('title', row['Name']))
+                return row['Name']
+
+            def to_list(x: Any) -> list:
+                if isinstance(x, str):
+                    return [x]
+                if isinstance(x, abc.Iterable):
+                    return list(x)
+                return []
+            
+            df = df.copy()
+            df['Name'] = df.apply(row_replace, axis = 1)
+            return df
+
+        if not(next.is_valid() and prev.is_valid()):
+            raise ValueError('At least one of the libraries is corrupted.')
+
+        next_df: pd.DataFrame = create_key_column(handle_artists(next.copy()), 'Artist', 'ArtistKey')
+        prev_df: pd.DataFrame = create_key_column(handle_artists(prev.copy()), 'Artist', 'ArtistKey')
+
+        if name_map.get('complex'):
+            next_df = handle_names(next_df)
+            prev_df = handle_names(prev_df)
+        
+        if name_map.get('simple'):
+            replacer = name_map['simple']
+            assert isinstance(replacer, dict)
+            next_df['Name'].replace(replacer, inplace = True)
+            prev_df['Name'].replace(replacer, inplace = True)
+
+        indices = ['Name', 'ArtistKey']
+        col_from_new = ['Composer', 'Date Added', 'Date Modified', 'Disc Number', 'Play Count', 'Size', 'Tags', 'Total Time', 'Track ID', 'Track Number']
+        combined_indices = indices.copy()
+        combined_indices.extend(col_from_new)
+        n_renamer, p_renamer, x_renamer = get_rename_map(col_from_new)
+
+        merged = prev_df.merge(
+            next_df[combined_indices],
+            on = indices,
+            how = 'outer',
+            indicator = True,
+            suffixes = ('_p', '_n')
+        )
+
+        matched = merged.loc[merged['_merge'] == 'both'].copy().rename(columns = n_renamer)
+        matched = matched[prev_df.columns]
+        matched = matched.drop(columns = [f'{col}_p' for col in col_from_new], errors = 'ignore')
+        matched = matched.merge(
+            next_df[combined_indices],
+            on = indices,
+            how = 'left'
+        )
+
+        matched = matched.drop(columns = [f'{col}_y' for col in col_from_new], errors = 'ignore').rename(columns = x_renamer)
+        matched = matched[~matched.duplicated(indices)]
+        next_only = merged.loc[merged['_merge'] == 'right_only', indices].merge(
+            next_df, on = indices, how = 'left'
+        )
+
+        prev_only = merged.loc[merged['_merge'] == 'left_only'].copy().rename(columns = p_renamer)[prev_df.columns]
+        drop_key_column('ArtistKey', [matched, next_only, prev_only])
+        return LibraryMerger(matched, next_only, prev_only)
 
     def artist_chart(self: 'Library') -> pd.DataFrame:
         '''
@@ -430,3 +592,66 @@ class Library:
 
         else:
             raise ValueError('The library is corrupted.')
+
+class LibraryMerger:
+    '''
+    The container of the iTunes library merge result.
+    '''
+    
+    def __init__(self: 'LibraryMerger', matched: pd.DataFrame, next_only: pd.DataFrame, prev_only: pd.DataFrame) -> None:
+        self.__mdf__ = matched
+        self.__ndf__ = next_only
+        self.__pdf__ = prev_only
+
+    def __repr__(self: 'LibraryMerger') -> str:
+        return f'iTunes Library Merge Result <Matched/Left Only/Right Only: {len(self.__mdf__)}/{len(self.__ndf__)}/{len(self.__pdf__)}>'
+
+    __name__ = 'LibraryMerger'
+
+    @property
+    def matched(self: 'LibraryMerger') -> pd.DataFrame:
+        '''
+        Matched tracks.
+        '''
+        return self.__mdf__.copy(deep = True)
+    
+    @matched.setter
+    def matched(self: 'LibraryMerger', input: pd.DataFrame) -> None:
+        self.__mdf__ = input
+
+    @property
+    def next_only(self: 'LibraryMerger') -> pd.DataFrame:
+        '''
+        The tracks that only appear on the next library.
+        '''
+        return self.__ndf__.copy(deep = True)
+    
+    @next_only.setter
+    def next_only(self: 'LibraryMerger', input: pd.DataFrame) -> None:
+        self.__ndf__ = input
+
+    @property
+    def prev_only(self: 'LibraryMerger') -> pd.DataFrame:
+        '''
+        The tracks that only appear on the previous library.
+        '''
+        return self.__pdf__.copy(deep = True)
+    
+    @prev_only.setter
+    def prev_only(self: 'LibraryMerger', input: pd.DataFrame) -> None:
+        self.__npf__ = input
+    
+    def as_lib(self: 'LibraryMerger', include_next: bool = True, include_prev: bool = False) -> 'Library':
+        '''
+        Retrieve the matched result as a library.
+        '''
+
+        data = self.__mdf__.copy()
+        if include_next:
+            data = pd.concat([data, self.__ndf__])
+
+        if include_prev:
+            data = pd.concat([data, self.__pdf__])
+
+        print(data)
+        return Library(data)

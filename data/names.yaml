@@ -1,0 +1,391 @@
+# The conversion table for song titles
+
+# Complex conversion table
+#   This ensure that the namesake songs will not be overwritten.
+complex: 
+  - artist: ["*Luna", Yuaru]
+    title: ΔV (feat. ゆある)
+    alias: Delta V (feat. Yuaru)
+
+  - artist: ["*Luna", わかばやし]
+    title: 彼方の破片 (feat. わかばやし)
+    alias: Fragments Of The Beyond (feat. わかばやし)
+
+  - artist: ["*Luna", Nenne]
+    title: 透明 (feat. ねんね)
+    alias: Transparent (feat. Nenne)
+
+  - artist: Ai Higuchi
+    title: 悪魔の子
+    alias: [Akuma no Ko, 惡魔之子]
+
+  - artist: Aimer
+    title: ONE
+    alias: One
+
+  - artist: Aimer
+    title: トリル -starless night ver.-
+    alias: Trill (starless night version)
+
+  - artist: AliA
+    title: かくれんぼ
+    alias: Hide and Seek
+
+  - artist: Awesome City Club
+    title: アイオライト
+    alias: Iolite
+
+  - artist: BUMP OF CHICKEN
+    title: strawberry
+    alias: Strawberry
+
+  - artist: [ChiCO, HoneyWorks]
+    title: アイのシナリオ
+    alias: Aino Scenario
+  
+  - artist: Drama Store
+    title: むすんで、ひらいて
+    alias: Close and Open
+
+  - artist: [DJ Genki, Camellia, moimoi]
+    title: Traveller (feat. moimoi)
+    alias: Traveller (feat. Moimoi)
+
+  - artist: [Fifteen voices, another anima]
+    title: キミノイル世界線 feat. another anima
+    alias: Another world you are (feat. another anima)
+
+  - artist: [FUZI, DECO*27, Kurokumo]
+    title: ハートインパルス (feat. くろくも)
+    alias: Heart Impulse (feat. Kurokumo)
+
+  - artist: GENERATIONS from EXILE TRIBE
+    title: One in a Million -奇跡の夜に-
+    alias: One in a Million
+
+  - artist: Glee Cast
+    title: Hall of Fame (Glee Cast Version)
+    alias: Hall Of Fame
+
+  - artist: [Hige Driver, shully]
+    title: ミラクルすぎてヤバイ (feat. shully)
+    alias: Miracle Only Be the Best (feat. Shully)
+
+  - artist: HIRAIDAI
+    title: Romeo+Juliet -Love goes on-
+    alias: Romeo+Juliet - Love goes on
+
+  - artist: [Ichinose LUPO, Yuneko]
+    title: 共鳴 (feat. Yuneko)
+    alias: Resonance (feat. Yuneko)
+
+  - artist: Kaerinokai
+    title: ゴースト
+    alias: Ghost
+
+  - artist: [KAF, Ayane Sakura]
+    title: あさひ
+    alias: Sunrise
+
+  - artist: Kana Hanazawa
+    title: ドラマチックじゃなくても
+    alias: Not As Dramatic As...
+
+  - artist: Kenshi Yonezu
+    title: M八七
+    alias: M87
+
+  - artist: Kenshi Yonezu
+    title: orion
+    alias: Orion
+
+  - artist: Kenshi Yonezu
+    title: パプリカ
+    alias: Paprika
+
+  - artist: kessoku band
+    title: ギターと孤独と蒼い惑星
+    alias: Guitar, Loneliness and Blue Planet
+
+  - artist: kessoku band
+    title: ひみつ基地
+    alias: Secret base
+
+  - artist: KOTONOHOUSE
+    title: but you don’t
+    alias: But You Don't
+
+  - artist: [KOTONOHOUSE, RANASOL]
+    title: My medicine (feat. RANASOL)
+    alias: My Medicine (feat. Ranasol)
+
+  - artist: [KOTONOHOUSE, RANASOL]
+    title: スタートレイル (feat. RANASOL)
+    alias: Star Trail (feat. RANASOL)
+
+  - artist: Lilas Ikura
+    title: ヒカリ
+    alias: HIkari
+
+  - artist: Lilas Ikura
+    title: スパークル
+    alias: Sparkle
+
+  - artist: LiSA
+    title: crossing field
+    alias: Crossing Field
+
+  - artist: [meramipop, nayuta]
+    title: リコレクト・リフレクト
+    alias: Recollect Reflect
+
+  - artist: milet
+    title: Noёl In July
+    alias: Noel In July
+
+  - artist: Mili
+    title: world.execute (me) ;
+    alias: World.Execute (Me) ;
+
+  - artist: [nayuta, meramipop]
+    title: Connect (feat. めらみぽっぷ)
+    alias: Connect (feat. meramipop)
+
+  - artist: Novelbright
+    title: ラストシーン
+    alias: Last Scene
+
+  - artist: Official HIGE DANdism
+    title: 115万キロのフィルム
+    alias: 115 Million Kilometer Film
+
+  - artist: Official HIGE DANdism
+    title: アポトーシス
+    alias: Apoptosis
+  
+  - artist: Official HIGE DANdism
+    title: イエスタデイ
+    alias: Yesterday
+
+  - artist: ONE OK ROCK
+    title: Wherever You Are
+    alias: Wherever you are
+
+  - artist: [PEOPLE 1, Kinopoppo] 
+    title: Deadstock (feat. きのぽっぽ)
+    alias: Deadstock (feat. Kinopoppo)
+
+  - artist: [PIKASONIC, nakotanmaru]
+    title: ヒロイン
+    alias: Heroine.
+
+  - artist: RADWIMPS
+    title: 25コ目の染色体
+    alias: 25kome No Senshokutai
+  
+  - artist: RADWIMPS
+    title: デート
+    alias: Date
+
+  - artist: [RADWIMPS, Toko Miura]
+    title: グランドエスケープ (feat. 三浦透子)
+    alias: "Grand Escape (Movie Edit) [feat. Toko Miura]"
+
+  - artist: RADWIMPS
+    title: スパークル (movie ver.)
+    alias: Sparkle - Movie Ver.
+
+  - artist: Rokudenashi
+    title: ただ声一つ
+    alias: One Voice
+
+  - artist: SANARI
+    title: Brand-New
+    alias: BRAND-NEW
+
+  - artist: Seventeen Years Old and Berlin Wall
+    title: 地上の花
+    alias: A Flower of the Ground
+
+  - artist: [SHUNTA, Tachibana Ichika]
+    title: Peach (feat. 橘一花)
+    alias: Peach (feat. Tachibana Ichika)
+
+  - artist: SK MUSIC
+    title: NEXT
+    alias: Next
+
+  - artist: [Sonia Calico, 曾妮]
+    title: Pay! Senayi! 歡唱吧! (feat. 曾妮)
+    alias: Pay! Senayi! (feat. Dremedreman)
+
+  - artist: Star Seed
+    title: The Space in Between
+    alias: THE SPACE IN BETWEEN
+
+  - artist: [Star Seed, Lexi Scatena]
+    title: You
+    alias: YOU
+
+  - artist: the peggies
+    title: センチメートル
+    alias: Centimeter
+
+  - artist: Thymsleap
+    title: すこしずつだけでいいよ
+    alias: Little By Little
+
+  - artist: TUYU
+    title: テリトリーバトル
+    alias: Territory Battle
+
+  - artist: wacci
+    title: 別の人の彼女になったよ
+    alias: No Regret
+
+  - artist: yama
+    title: ライカ
+    alias: Like a
+
+  - artist: YOASOBI
+    title: アドベンチャー
+    alias: Adventure
+  
+  - artist: YOASOBI
+    title: あの夢をなぞって
+    alias: Ano yume wo nazotte
+
+  - artist: YOASOBI
+    title: 優しい彗星
+    alias: Comet
+  
+  - artist: YOASOBI
+    title: アンコール
+    alias: Encore
+
+  - artist: YOASOBI
+    title: ラブレター
+    alias: loveletter
+
+  - artist: YOASOBI
+    title: たぶん
+    alias: Probably
+
+  - artist: YOASOBI
+    title: 三原色
+    alias: RGB
+
+  - artist: yuiko
+    title: my friend
+    alias: My Friend
+
+  - artist: [Yuki Ono, Mai Nakahara]
+    title: いつも二人がいいね
+    alias: Just the two of us
+
+  - artist: [YUKIYANAGI, Yuki Shizaki]
+    title: floating (feat. 紫崎雪)
+    alias: Floating (feat. Yuki Shizaki)
+
+  - artist: Yuuri
+    title: アストロノーツ
+    alias: Astronauts
+
+  - artist: Yuuri
+    title: ベテルギウス
+    alias: BETELGEUSE
+
+  - artist: Yuuri
+    title: ビリミリオン
+    alias: Billimillion
+
+  - artist: Yuuri
+    title: インフィニティ
+    alias: Infinity
+
+  - artist: Yuuri
+    title: レオ
+    alias: Leo
+
+  - artist: Yuuri
+    title: メリーゴーランド
+    alias: merry-go-round
+
+  - artist: Yuuri
+    title: ピーターパン
+    alias: Peter Pan
+
+  - artist: Yuuri
+    title: シャッター
+    alias: Shutter
+
+  - artist: しゃろう
+    title: 10℃
+    alias: 10C
+
+  - artist: [三重電音宮, 羅西]
+    title: 世界末日也不過如此 (feat. 羅西 Roxi)
+    alias: Even the end of the world is nothing worth (feat. Roxi)
+
+  - artist: 原子邦妮
+    title: 你已忘記但我還記得的事
+    alias: I Remember
+
+  - artist: 原子邦妮
+    title: 也許你不懂
+    alias: Maybe You Don't Understand
+
+  - artist: 原子邦妮
+    title: 蒸發的世界剩下我
+    alias: Alone In the Vaporized World
+
+  - artist: 曾沛慈
+    title: 不過失去了一點點
+    alias: Just Lose It (Hurt So Much)
+
+  - artist: [文慧如, 邱鋒澤]
+    title: Messed Up (feat. 邱鋒澤)
+    alias: Messed Up (feat. Qiu Feng Ze)
+
+  - artist: 陳嘉樺
+    title: 信愛成癮
+    alias: Love Addiction
+
+# Simple conversion table
+simple:
+  Doushitekoishitekonna: どうして恋してこんな
+  Bokunomamade: 僕のままで
+  Buriki: ブリキ
+  "Byoumeiha Aidatta (feat. z'5)": 病名は愛だった (feat. z'5)
+  Jana: じゃあな
+  Haiirotoao: 灰色と青 ( + 菅田将暉 )
+  Harujion: ハルジオン
+  Haruka: ハルカ
+  Hatsukoi: 初恋
+  "hitoribocchi tokyo": ひとりぼっち東京
+  "Issun No Aka": 一寸の赤
+  Kakurenbo: かくれんぼ
+  Karakara: カラカラ
+  Kataomoi: カタオモイ
+  "Kawaikunaritai (feat. Hanon & Kotoha)": 可愛くなりたい (feat. Hanon & Kotoha)
+  Kazenikaorunatsunokioku: 風に薫る夏の記憶
+  "Kimi Wo Sukuu": 君を掬う
+  "Machigai Sagashi": まちがいさがし
+  Machigaisagashi: まちがいさがし
+  "Moshimo inochiga egaketara": もしも命が描けたら
+  "Mou sukoshi dake": もう少しだけ
+  "Nandemonaiya (Movie Edit.)": なんでもないや - Movie Edit.
+  "Ningen Gokko": 人間ごっこ
+  Sayonaranomaeni: さよならの前に
+  sayonarawoietakana: さよならを言えたかな
+  Shirushi: シルシ
+  "Solfa Wo Kiita Yoruni": ソルファを聞いた夜に
+  "Suki Suki Suki": 好き好き好き
+  Takara-mono: タカラモノ
+  "Toka No Hana": 十夏の花
+  "Tsubame (feat. midories)": ツバメ (feat. ミドリーズ)
+  Wagamama: ワガママ
+  WASURENA: 勿忘
+  "Yasashii Hito": 優しい人
+  "Zenzenzense - Movie Ver.": 前前前世 (movie ver.)
+  不打扰: 不打擾
