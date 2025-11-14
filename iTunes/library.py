@@ -653,5 +653,5 @@ class LibraryMerger:
         if include_prev:
             data = pd.concat([data, self.__pdf__])
 
-        print(data)
+        data = data.sort_values('Track ID', ignore_index = True)
         return Library(data)

@@ -12,8 +12,16 @@ complex:
     alias: Fragments Of The Beyond (feat. わかばやし)
 
   - artist: ["*Luna", Nenne]
+    title: まどろみ (feat. ねんね)
+    alias: Muddle Roaming (feat. ねんね)
+
+  - artist: ["*Luna", Nenne]
     title: 透明 (feat. ねんね)
     alias: Transparent (feat. Nenne)
+
+  - artist: [Adomiori, NextLight]
+    title: アリストテレス、いつかまた
+    alias: Aristotle, Again Someday
 
   - artist: Ai Higuchi
     title: 悪魔の子
@@ -24,6 +32,10 @@ complex:
     alias: One
 
   - artist: Aimer
+    title: カタオモイ
+    alias: Kataomoi
+
+  - artist: Aimer
     title: トリル -starless night ver.-
     alias: Trill (starless night version)
 
@@ -31,25 +43,53 @@ complex:
     title: かくれんぼ
     alias: Hide and Seek
 
+  - artist: AprilBlue
+    title: 誰も気づかなくても
+    alias: Only I Know
+
   - artist: Awesome City Club
     title: アイオライト
     alias: Iolite
+
+  - artist: Awesome City Club
+    title: 息させて
+    alias: Let me breathe
 
   - artist: BUMP OF CHICKEN
     title: strawberry
     alias: Strawberry
 
+  - artist: capo2
+    title: 忘れたら
+    alias: If You Forget
+
   - artist: [ChiCO, HoneyWorks]
     title: アイのシナリオ
     alias: Aino Scenario
-  
-  - artist: Drama Store
-    title: むすんで、ひらいて
-    alias: Close and Open
+
+  - artist: D-D-Dice
+    title: alpha Ionone
+    alias: Alpha Ionone
+
+  - artist: DISH//
+    title: 猫 〜THE FIRST TAKE ver.〜
+    alias: Neko (The First Take Version)
 
   - artist: [DJ Genki, Camellia, moimoi]
     title: Traveller (feat. moimoi)
     alias: Traveller (feat. Moimoi)
+
+  - artist: Drama Store
+    title: むすんで、ひらいて
+    alias: Close and Open
+
+  - artist: DUSTCELL
+    title: 心臓
+    alias: Heart
+
+  - artist: ['Eir Aoi', 'DubVision']
+    title: 心臓 (DubVision Remix) - SACRA BEATS Singles
+    alias: Heart (DubVision Remix) - SACRA BEATS Singles
 
   - artist: [Fifteen voices, another anima]
     title: キミノイル世界線 feat. another anima
@@ -59,6 +99,14 @@ complex:
     title: ハートインパルス (feat. くろくも)
     alias: Heart Impulse (feat. Kurokumo)
 
+  - artist: [FUZI, Kotoha]
+    title: 涙色スカイ (feat. Kotoha)
+    alias: Tear Colored Sky (feat. Kotoha)
+
+  - artist: GENERATIONS
+    title: 片想い
+    alias: Kataomoi
+
   - artist: GENERATIONS from EXILE TRIBE
     title: One in a Million -奇跡の夜に-
     alias: One in a Million
@@ -67,17 +115,45 @@ complex:
     title: Hall of Fame (Glee Cast Version)
     alias: Hall Of Fame
 
+  - artist: Halv
+    title: 冷徹たるアルバ (Hype Edit.)
+    alias: Coldhearted Alba (Hype Edit.)
+
   - artist: [Hige Driver, shully]
     title: ミラクルすぎてヤバイ (feat. shully)
     alias: Miracle Only Be the Best (feat. Shully)
+
+  - artist: [hitogoto, 70D]
+    title: 偶像と悪魔 (feat. 70D)
+    alias: Idol&Devil (feat. 70D)
 
   - artist: HIRAIDAI
     title: Romeo+Juliet -Love goes on-
     alias: Romeo+Juliet - Love goes on
 
+  - artist: [HoneyWorks, Hiroshi Kamiya, Haruka Tomatsu, Yuki Kaji, Kana Asumi, Kenichi Suzumura, Aki Toyosaki]
+    title: 東京オータムセッション (feat. 瀬戸口優, 榎本夏樹, 望月蒼太, 早坂あかり, 芹沢春輝 & 合田美桜)
+    alias: Tokyo autumn session (feat. Yu Setoguchi, Natsuki Enomoto, Sota Mochizuki, Akari Hayasaka, Haruki Serizawa & Miou Aida)
+
+  - artist: [HoneyWorks, Hiroshi Kamiya, Haruka Tomatsu, Yuki Kaji, Kana Asumi, Kenichi Suzumura, Aki Toyosaki]
+    title: 東京ウインターセッション (feat. 瀬戸口優, 榎本夏樹, 望月蒼太, 早坂あかり, 芹沢春輝 & 合田美桜)
+    alias: Tokyo Winter Session (feat. Yu Setoguchi, Natsuki Enomoto, Sota Mochizuki, Akari Hayasaka, Haruki Serizawa & Miou Aida)
+
+  - artist: [HoneyWorks, Sora Amamiya]
+    title: 金曜日のおはよう -another story- (feat. 成海聖奈 (CV:雨宮天))
+    alias: Kinyobi No Ohayo - another story (feat. Sena Narumi (CV:Amamiya Sora))
+
+  - artist: [Ichinose LUPO, Hatsune Miku]
+    title: 泡沫と水風船 (Piano Arrange) [feat. 初音ミク]
+    alias: Bubbles and water balloons (Piano Arrange) [feat. Hatsune Miku]
+
   - artist: [Ichinose LUPO, Yuneko]
     title: 共鳴 (feat. Yuneko)
     alias: Resonance (feat. Yuneko)
+
+  - artist: [Ichinose LUPO, Hatsune Miku]
+    title: 春を歩いた (Piano Solo) [feat. 初音ミク]
+    alias: Walked in spring (Piano Solo) [feat. Hatsune Miku]
 
   - artist: Kaerinokai
     title: ゴースト
@@ -103,6 +179,14 @@ complex:
     title: パプリカ
     alias: Paprika
 
+  - artist: Kenshi Yonezu
+    title: 海の幽霊
+    alias: Spirits of the Sea
+
+  - artist: kessoku band
+    title: 秒針少女
+    alias: Chronostasis
+
   - artist: kessoku band
     title: ギターと孤独と蒼い惑星
     alias: Guitar, Loneliness and Blue Planet
@@ -110,6 +194,14 @@ complex:
   - artist: kessoku band
     title: ひみつ基地
     alias: Secret base
+  
+  - artist: kessoku band
+    title: 月並みに輝け
+    alias: Shine as usual
+
+  - artist: King Gnu
+    title: 白日
+    alias: Hakujitsu
 
   - artist: KOTONOHOUSE
     title: but you don’t
@@ -123,6 +215,10 @@ complex:
     title: スタートレイル (feat. RANASOL)
     alias: Star Trail (feat. RANASOL)
 
+  - artist: KURO
+    title: 街角とスキップと不思議なエンカウンター
+    alias: Street Corners, Skips and Mysterious Encounters
+
   - artist: Lilas Ikura
     title: ヒカリ
     alias: HIkari
@@ -135,9 +231,25 @@ complex:
     title: crossing field
     alias: Crossing Field
 
+  - artist: Luna Aokami
+    title: 雨と虹のように
+    alias: Like Rain and Rainbow
+
+  - artist: MEMESIA
+    title: 継炎
+    alias: Keien
+
   - artist: [meramipop, nayuta]
     title: リコレクト・リフレクト
     alias: Recollect Reflect
+
+  - artist: [Meteor Sightseeing, MIRA]
+    title: アカシアを芽咲して (feat. MIRA)
+    alias: Acacia Buds in Bloom (feat. MIRA)
+
+  - artist: [Meteor Sightseeing, Asahina kon]
+    title: Kalmia (feat. 朝比奈こん)
+    alias: Kalmia (feat. Asahina kon)
 
   - artist: milet
     title: Noёl In July
@@ -147,13 +259,25 @@ complex:
     title: world.execute (me) ;
     alias: World.Execute (Me) ;
 
+  - artist: Myuk
+    title: グライド
+    alias: Glide
+
   - artist: [nayuta, meramipop]
     title: Connect (feat. めらみぽっぷ)
     alias: Connect (feat. meramipop)
 
+  - artist: [NICHIMEZO, Rei, furu_ri]
+    title: カラフルパレット
+    alias: Colorful Palette
+
   - artist: Novelbright
     title: ラストシーン
     alias: Last Scene
+
+  - artist: [Odd, Misuzu.]
+    title: 水縹と踊る (feat. みすず.)
+    alias: Adrift in Pale Blue (feat. Misuzu.)
 
   - artist: Official HIGE DANdism
     title: 115万キロのフィルム
@@ -179,37 +303,85 @@ complex:
     title: ヒロイン
     alias: Heroine.
 
+  - artist: [PIKASONIC, nakotanmaru]
+    title: 海底列車
+    alias: Undersea Train
+
+  - artist: Project Lumina
+    title: ひまわり
+    alias: Sunflower
+
   - artist: RADWIMPS
     title: 25コ目の染色体
     alias: 25kome No Senshokutai
   
   - artist: RADWIMPS
+    title: 大丈夫
+    alias: We'll Be Alright (Movie Edit)
+
+  - artist: RADWIMPS
     title: デート
     alias: Date
+
+  - artist: RADWIMPS
+    title: 夢灯籠
+    alias: Dream Lantern
 
   - artist: [RADWIMPS, Toko Miura]
     title: グランドエスケープ (feat. 三浦透子)
     alias: "Grand Escape (Movie Edit) [feat. Toko Miura]"
 
   - artist: RADWIMPS
+    title: 白日 (10 years ver.)
+    alias: Hakujitsu (10 Years Version)
+
+  - artist: RADWIMPS
+    title: 愛にできることはまだあるかい
+    alias: Is There Still Anything That Love Can Do?
+
+  - artist: RADWIMPS
     title: スパークル (movie ver.)
     alias: Sparkle - Movie Ver.
+
+  - artist: [Roca, Rime]
+    title: 星海 (feat. Rime)
+    alias: Stellar Sea (feat. Rime)
+
+  - artist: [Roca, KAFU]
+    title: 夏に焦がれて (feat. KAFU)
+    alias: Yearning For Summer (feat. KAFU)
 
   - artist: Rokudenashi
     title: ただ声一つ
     alias: One Voice
 
+  - artist: [Room97, Natsume Itsuki]
+    title: 衝動 (feat. 棗いつき)
+    alias: Impluse (feat. Natsume Itsuki)
+
   - artist: SANARI
     title: Brand-New
     alias: BRAND-NEW
+
+  - artist: Sayuri
+    title: 花の塔
+    alias: Tower of Flower
 
   - artist: Seventeen Years Old and Berlin Wall
     title: 地上の花
     alias: A Flower of the Ground
 
+  - artist: shew
+    title: ユースフォビア
+    alias: Youthphobia
+
   - artist: [SHUNTA, Tachibana Ichika]
     title: Peach (feat. 橘一花)
     alias: Peach (feat. Tachibana Ichika)
+
+  - artist: Shinji Chiura
+    title: フォレスト・ダンス
+    alias: [Limbs Bright Dance, 森林之舞]
 
   - artist: SK MUSIC
     title: NEXT
@@ -227,17 +399,41 @@ complex:
     title: You
     alias: YOU
 
+  - artist: [Synthion, League of Legends Music]
+    title: Xylitol
+    alias: 木糖醇
+
+  - artist: [Taku Inoue, ninzin]
+    title: トラフ (feat. にんじん from ロクデナシ)
+    alias: Trough (Feat. ninzin)
+
   - artist: the peggies
     title: センチメートル
     alias: Centimeter
+
+  - artist: THE SxPLAY
+    title: 花雨
+    alias: Flower Rain
 
   - artist: Thymsleap
     title: すこしずつだけでいいよ
     alias: Little By Little
 
+  - artist: Thymsleap
+    title: 新盆
+    alias: Summer Days
+
+  - artist: TRASH
+    title: 希望你回來
+    alias: I Don't Wanna Say Goodbye
+
   - artist: TUYU
     title: テリトリーバトル
     alias: Territory Battle
+
+  - artist: [Vicetone, 繆維霖, 黃霄雲]
+    title: 平行線 (feat. 黃霄雲)
+    alias: 平行线 (feat. Wink XY)
 
   - artist: wacci
     title: 別の人の彼女になったよ
@@ -268,12 +464,20 @@ complex:
     alias: loveletter
 
   - artist: YOASOBI
+    title: 怪物
+    alias: Monster
+
+  - artist: YOASOBI
     title: たぶん
     alias: Probably
 
   - artist: YOASOBI
     title: 三原色
     alias: RGB
+
+  - artist: YOASOBI
+    title: 大正浪漫
+    alias: Romance
 
   - artist: yuiko
     title: my friend
@@ -319,13 +523,33 @@ complex:
     title: シャッター
     alias: Shutter
 
+  - artist: Yuuri
+    title: 恋人じゃなくなった日
+    alias: The day we become eternal love,not lovers
+
   - artist: しゃろう
     title: 10℃
     alias: 10C
 
+  - artist: [をかし屋, Kasane Teto]
+    title: 蓮華 (feat. 重音テト)
+    alias: Lotus (feat. KASANE TETO)
+
   - artist: [三重電音宮, 羅西]
     title: 世界末日也不過如此 (feat. 羅西 Roxi)
     alias: Even the end of the world is nothing worth (feat. Roxi)
+
+  - artist: 原子邦妮
+    title: 蒸發的世界剩下我
+    alias: Alone In the Vaporized World
+
+  - artist: 原子邦妮
+    title: 這樣我就能忘記你了
+    alias: Forget About You
+
+  - artist: 原子邦妮
+    title: 現在你好嗎
+    alias: How You Doing
 
   - artist: 原子邦妮
     title: 你已忘記但我還記得的事
@@ -336,12 +560,36 @@ complex:
     alias: Maybe You Don't Understand
 
   - artist: 原子邦妮
-    title: 蒸發的世界剩下我
-    alias: Alone In the Vaporized World
+    title: 無情怪物
+    alias: Ruthless Monster
+
+  - artist: 原子邦妮
+    title: 明年夏天我們會不會還在一起
+    alias: Will We Still Be Together Next Summer
 
   - artist: 曾沛慈
     title: 不過失去了一點點
     alias: Just Lose It (Hurt So Much)
+
+  - artist: 動力火車
+    title: 我很好騙
+    alias: Love Me True
+
+  - artist: 吳鎮安
+    title: 矮星
+    alias: Sunless
+
+  - artist: 洋蔥
+    title: 明顯是個狠角色
+    alias: Fool Larry
+
+  - artist: 李佳薇
+    title: 大火
+    alias: Burn
+
+  - artist: 李佳薇
+    title: 煎熬
+    alias: Suffering
 
   - artist: [文慧如, 邱鋒澤]
     title: Messed Up (feat. 邱鋒澤)
@@ -351,41 +599,109 @@ complex:
     title: 信愛成癮
     alias: Love Addiction
 
+  - artist: 陽春白雪
+    title: 唐多令
+    alias: Farewell
+
+  - artist: [邱鋒澤, 黃偉晉]
+    title: 潛台詞 (feat. 黃偉晉)
+    alias: Unspoken (feat. Wayne Huang)
+
+  - artist: 周興哲
+    title: 我愛過你
+    alias: I Loved You
+
+  - artist: [黃明志, Hồ Quang Hiếu]
+    title: 胡志明的雨 (feat. 胡光孝) [合唱版]
+    alias: Rain In Ho Chi Minh (feat. Hồ Quang Hiếu) [合唱版]
+
+  - artist: 韋禮安
+    title: 如果再見
+    alias: If We Meet Again
+
+  - artist: 韋禮安
+    title: 如果可以 (電影"月老"主題曲)
+    alias: Red Scarf ("Till We Meet Again" Movie Theme Song)
+  
+  - artist: 韋禮安
+    title: 還是會
+    alias: Still
+
 # Simple conversion table
 simple:
-  Doushitekoishitekonna: どうして恋してこんな
   Bokunomamade: 僕のままで
   Buriki: ブリキ
   "Byoumeiha Aidatta (feat. z'5)": 病名は愛だった (feat. z'5)
+  Dakuten: 濁点
+  Doushitekoishitekonna: どうして恋してこんな
   Jana: じゃあな
+  Gunjou: 群青
   Haiirotoao: 灰色と青 ( + 菅田将暉 )
+  "Hakoniwa Daybreak (feat. Nayuta)": 箱庭デイブレイク (feat. nayuta)
+  "Hakujitsumu (feat. Isui)": 白日夢 (feat. 倚水)
+  Hanashigashitaiyo: 話がしたいよ
   Harujion: ハルジオン
   Haruka: ハルカ
+  "Haru Wo Tsugeru": 春を告げる
   Hatsukoi: 初恋
+  Hitohiratsumuide: ひとひらを紡いで
   "hitoribocchi tokyo": ひとりぼっち東京
   "Issun No Aka": 一寸の赤
+  Kaerimichiwa Toomawarishitakunaru: 帰り道は遠回りしたくなる
+  "Kaketa Tsuki": 欠けた月 
   Kakurenbo: かくれんぼ
+  Kanden: 感電
   Karakara: カラカラ
-  Kataomoi: カタオモイ
   "Kawaikunaritai (feat. Hanon & Kotoha)": 可愛くなりたい (feat. Hanon & Kotoha)
   Kazenikaorunatsunokioku: 風に薫る夏の記憶
   "Kimi Wo Sukuu": 君を掬う
+  "Kokoro Kaleidoscope": ココロカレイドスコープ
+  "Kotobano Iranai Yakusoku (feat. Sana)": 言葉のいらない約束
+  Kousui: 香水
+  kyoukaisen: 境界線
   "Machigai Sagashi": まちがいさがし
   Machigaisagashi: まちがいさがし
+  "Mikansei Rendezvous": 未完成ランデヴー
   "Moshimo inochiga egaketara": もしも命が描けたら
   "Mou sukoshi dake": もう少しだけ
   "Nandemonaiya (Movie Edit.)": なんでもないや - Movie Edit.
+  "Niji No Kanatani": 虹の彼方に
   "Ningen Gokko": 人間ごっこ
+  "Noraneko Wa Uchu O Mezashita": 野良猫は宇宙を目指した
+  "Oikaze, Bokura Wa Yuku": 追風、僕らは征く
+  Ryureirinbu: 流麗凛舞
   Sayonaranomaeni: さよならの前に
   sayonarawoietakana: さよならを言えたかな
+  Shiori: 栞
+  "shiroiro kagerou": 白色蜉蝣
   Shirushi: シルシ
+  Shonen: 少年
+  Shukumei: 宿命
+  "Shunkashuto (reprise)": 春夏秋冬 reprise
+  Shunrai: 春雷
   "Solfa Wo Kiita Yoruni": ソルファを聞いた夜に
+  Soumatou: 走馬灯
+  Suiseimushi: 酔生夢死
   "Suki Suki Suki": 好き好き好き
+  "Syundo -Syundo-": 蠢動 -syundo-
   Takara-mono: タカラモノ
   "Toka No Hana": 十夏の花
+  "Tokenai Kakehiki": 解けない駆け引き
+  "Toumei Na Kimi (2025 Remastered)": 透明な君 (2025 Remastered)
   "Tsubame (feat. midories)": ツバメ (feat. ミドリーズ)
+  Tsumugu: 紡ぐ
+  "Uma to Shika": 馬と鹿
   Wagamama: ワガママ
+  "Watariboshi (feat. Sando Aoi & Younagi Yoru)": 渉り星 (feat. Sando Aoi & 夕凪夜)
   WASURENA: 勿忘
   "Yasashii Hito": 優しい人
+  "Yoru ni kakeru": 夜に駆ける
   "Zenzenzense - Movie Ver.": 前前前世 (movie ver.)
   不打扰: 不打擾
+  新年快乐: 新年快樂
+  忘记被忘记: 忘記被忘記
+  感谢你曾来过: 感謝你曾來過
+  "万有引力 (和声版伴奏)": 萬有引力 (和聲版伴奏)
+  烟袋斜街: 煙袋斜街
+  过往: 過往
+  飞鸟和蝉: 飛鳥和蟬
