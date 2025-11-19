@@ -2,6 +2,7 @@ from .utils import Utils
 from collections import abc, defaultdict
 from datetime import timedelta
 import msgpack
+from numpy import nan
 import os
 import pandas as pd
 import plistlib
@@ -186,7 +187,7 @@ class Library:
             raise ValueError('Invalid path.')
 
     @classmethod
-    def merge(cls, prev: 'Library', next: 'Library',
+    def merge(cls, prev: 'Library', next: 'Library | None' = None,
               artist_map: dict[str, str | list[str]] = {},
               artists_with_comma: list[str] = [],
               name_map: dict[str, dict[str, str] | list[dict[str, str | list[str]]]] = {}) -> LibraryMerger:
@@ -261,8 +262,30 @@ class Library:
             df['Name'] = df.apply(row_replace, axis = 1)
             return df
 
-        if not(next.is_valid() and prev.is_valid()):
-            raise ValueError('At least one of the libraries is corrupted.')
+        indices = ['Name', 'ArtistKey']
+        col_from_new = ['Composer', 'Date Added', 'Date Modified', 'Disc Number', 'Play Count', 'Size', 'Tags', 'Total Time', 'Track ID', 'Track Number']
+        combined_indices = indices.copy()
+        combined_indices.extend(col_from_new)
+        n_renamer, p_renamer, x_renamer = get_rename_map(col_from_new)
+        multiple_libs: bool = isinstance(next, cls)
+
+        if multiple_libs:
+            if not(next.is_valid() and prev.is_valid()):
+                raise ValueError('At least one of the libraries is corrupted.')
+        else:
+            empty_df = pd.DataFrame(columns=['Track ID', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Date Added', 'Date Modified', 'Disc Number', 'Play Count', 'Size', 'Tags', 'Total Time', 'Track ID', 'Track Number']).astype({
+                'Track ID': 'int64',
+                'Name': 'str',
+                'Year': 'int64',
+                'Date Modified': 'datetime64[ns]',
+                'Date Added': 'datetime64[ns]',
+                'Play Count': 'int64',
+                'Size': 'int64',
+                'Total Time': 'timedelta64[ns]',
+                'Disc Number': 'int64',
+                'Track Number': 'int64'
+            })
+            next = Library(empty_df)
 
         next_df: pd.DataFrame = create_key_column(handle_artists(next.copy()), 'Artist', 'ArtistKey')
         prev_df: pd.DataFrame = create_key_column(handle_artists(prev.copy()), 'Artist', 'ArtistKey')
@@ -277,36 +300,43 @@ class Library:
             next_df['Name'].replace(replacer, inplace = True)
             prev_df['Name'].replace(replacer, inplace = True)
 
-        indices = ['Name', 'ArtistKey']
-        col_from_new = ['Composer', 'Date Added', 'Date Modified', 'Disc Number', 'Play Count', 'Size', 'Tags', 'Total Time', 'Track ID', 'Track Number']
-        combined_indices = indices.copy()
-        combined_indices.extend(col_from_new)
-        n_renamer, p_renamer, x_renamer = get_rename_map(col_from_new)
-
-        merged = prev_df.merge(
-            next_df[combined_indices],
-            on = indices,
-            how = 'outer',
-            indicator = True,
-            suffixes = ('_p', '_n')
-        )
+        if multiple_libs:
+            merged = prev_df.merge(
+                next_df[combined_indices],
+                on = indices,
+                how = 'outer',
+                indicator = True,
+                suffixes = ('_p', '_n')
+            )
+        else:
+            next_df = next_df.loc[:, ~next_df.columns.duplicated()]
+            next_df = next_df.reindex(columns=prev_df.columns)
+            merged = pd.concat([prev_df, next_df], ignore_index = True)
+            merged['_merge'] = pd.Series(['both'] * len(merged))
 
         matched = merged.loc[merged['_merge'] == 'both'].copy().rename(columns = n_renamer)
         matched = matched[prev_df.columns]
         matched = matched.drop(columns = [f'{col}_p' for col in col_from_new], errors = 'ignore')
-        matched = matched.merge(
-            next_df[combined_indices],
-            on = indices,
-            how = 'left'
-        )
+
+        if multiple_libs:
+            matched = matched.merge(
+                next_df[combined_indices],
+                on = indices,
+                how = 'left'
+            )
 
         matched = matched.drop(columns = [f'{col}_y' for col in col_from_new], errors = 'ignore').rename(columns = x_renamer)
         matched = matched[~matched.duplicated(indices)]
-        next_only = merged.loc[merged['_merge'] == 'right_only', indices].merge(
-            next_df, on = indices, how = 'left'
-        )
 
-        prev_only = merged.loc[merged['_merge'] == 'left_only'].copy().rename(columns = p_renamer)[prev_df.columns]
+        if multiple_libs:
+            next_only = merged.loc[merged['_merge'] == 'right_only', indices].merge(
+                next_df, on = indices, how = 'left'
+            )
+            prev_only = merged.loc[merged['_merge'] == 'left_only'].copy().rename(columns = p_renamer)[prev_df.columns]
+        else:
+            next_only = merged.loc[merged['_merge'] == 'right_only', indices]
+            prev_only = merged.loc[merged['_merge'] == 'left_only'][prev_df.columns]
+
         drop_key_column('ArtistKey', [matched, next_only, prev_only])
         return LibraryMerger(matched, next_only, prev_only)
 
@@ -552,7 +582,37 @@ class Library:
             return self.__df__.copy()
         else:
             raise ValueError('The library is corrupted.')
+    
+    def to_excel(self: 'Library',
+                 path: str | bytes | os.PathLike[str],
+                 sheet: int | str = 0) -> None:
+        '''
+        Export the library to a Microsoft Excel file.
+        '''
+
+        if not self.is_valid():
+            raise ValueError('The library is corrupted.')
         
+        excel = self.__df__.copy()
+        excel['Artist'] = excel['Artist'].apply(lambda x: ', '.join(x))
+        excel['Play Count'] = excel['Play Count'].astype(int)
+        excel['Tags'] = excel['Tags'].apply(lambda x: ', '.join(sorted(x)))
+        excel['Year'] = excel['Year'].astype(int)
+
+        if 'Sub Tags' not in excel.columns:
+            empty = pd.Series([nan] * len(excel))
+            excel['Sub Tag 1'] = empty
+            excel['Sub Tag 2'] = empty
+            excel['Sub Tag 3'] = empty
+        
+        else:
+            excel['Sub Tag 1'] = excel['Sub Tags'].apply(lambda x: x[0] if isinstance(x, list) else nan)
+            excel['Sub Tag 2'] = excel['Sub Tags'].apply(lambda x: x[1] if isinstance(x, list) else nan)
+            excel['Sub Tag 3'] = excel['Sub Tags'].apply(lambda x: x[2] if isinstance(x, list) else nan)
+        
+        excel = excel.sort_values(['Play Count', 'Artist', 'Name'], ascending = [False, True, True], ignore_index = True).loc[:, ['Vocal', 'Language', 'Sub Genres', 'Sub Tag 1', 'Sub Tag 2', 'Sub Tag 3', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Play Count', 'Disc Number', 'Track Number', 'Tags']]
+        excel.to_excel(path, sheet_name = str(sheet))
+
     def to_msgpack(self: 'Library',
                    path: str | bytes | os.PathLike[str]) -> None:
         '''
@@ -604,7 +664,7 @@ class LibraryMerger:
         self.__pdf__ = prev_only
 
     def __repr__(self: 'LibraryMerger') -> str:
-        return f'iTunes Library Merge Result <Matched/Left Only/Right Only: {len(self.__mdf__)}/{len(self.__ndf__)}/{len(self.__pdf__)}>'
+        return f'iTunes Library Merge Result <Matched/Left Only/Right Only: {len(self.__mdf__)}/{len(self.__pdf__)}/{len(self.__ndf__)}>'
 
     __name__ = 'LibraryMerger'
 
