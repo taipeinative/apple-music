@@ -44,6 +44,10 @@ complex:
     alias: Hide and Seek
 
   - artist: AprilBlue
+    title: エイプリルブルー
+    alias: AprilBlue
+
+  - artist: AprilBlue
     title: 誰も気づかなくても
     alias: Only I Know
 
@@ -59,6 +63,10 @@ complex:
     title: strawberry
     alias: Strawberry
 
+  - artist: [capo2, KOTONOHOUSE]
+    title: dream of dreaming
+    alias: Dream of Dreaming
+
   - artist: capo2
     title: 忘れたら
     alias: If You Forget
@@ -66,6 +74,10 @@ complex:
   - artist: [ChiCO, HoneyWorks]
     title: アイのシナリオ
     alias: Aino Scenario
+
+  - artist: culenasm
+    title: 再去見尓
+    alias: see you again
 
   - artist: D-D-Dice
     title: alpha Ionone
@@ -78,6 +90,10 @@ complex:
   - artist: [DJ Genki, Camellia, moimoi]
     title: Traveller (feat. moimoi)
     alias: Traveller (feat. Moimoi)
+
+  - artist: [DJ Genki, Nanahira]
+    title: To the Night Sky (feat. ななひら)
+    alias: To the Night Sky (feat. Nanahira)
 
   - artist: Drama Store
     title: むすんで、ひらいて
@@ -263,6 +279,10 @@ complex:
     title: グライド
     alias: Glide
 
+  - artist: [Nanatsukaze, PIKASONIC, nakotanmaru]
+    title: 再生
+    alias: Replay
+
   - artist: [nayuta, meramipop]
     title: Connect (feat. めらみぽっぷ)
     alias: Connect (feat. meramipop)
@@ -270,6 +290,10 @@ complex:
   - artist: [NICHIMEZO, Rei, furu_ri]
     title: カラフルパレット
     alias: Colorful Palette
+
+  - artist: Novelbright
+    title: ハミングバード
+    alias: Hummingbird
 
   - artist: Novelbright
     title: ラストシーン
@@ -302,6 +326,10 @@ complex:
   - artist: [PIKASONIC, nakotanmaru]
     title: ヒロイン
     alias: Heroine.
+
+  - artist: [PIKASONIC, NatsumeAlly]
+    title: パノラマ
+    alias: Panorama
 
   - artist: [PIKASONIC, nakotanmaru]
     title: 海底列車
@@ -479,6 +507,10 @@ complex:
     title: 大正浪漫
     alias: Romance
 
+  - artist: YOURNESS
+    title: 「私の最後の日」
+    alias: "\"My Last Day\""
+
   - artist: yuiko
     title: my friend
     alias: My Friend
@@ -637,13 +669,16 @@ simple:
   Jana: じゃあな
   Gunjou: 群青
   Haiirotoao: 灰色と青 ( + 菅田将暉 )
+  "Haikei, Shinainarukimihe": 拝啓、親愛なる君へ
   "Hakoniwa Daybreak (feat. Nayuta)": 箱庭デイブレイク (feat. nayuta)
   "Hakujitsumu (feat. Isui)": 白日夢 (feat. 倚水)
+  Hakumei28zi: ハクメイ28zi
   Hanashigashitaiyo: 話がしたいよ
   Harujion: ハルジオン
   Haruka: ハルカ
   "Haru Wo Tsugeru": 春を告げる
   Hatsukoi: 初恋
+  "Hoshi Ni Naru (feat. Isui)": 星になる (feat. 倚水)
   Hitohiratsumuide: ひとひらを紡いで
   "hitoribocchi tokyo": ひとりぼっち東京
   "Issun No Aka": 一寸の赤
@@ -655,7 +690,9 @@ simple:
   "Kawaikunaritai (feat. Hanon & Kotoha)": 可愛くなりたい (feat. Hanon & Kotoha)
   Kazenikaorunatsunokioku: 風に薫る夏の記憶
   "Kimi Wo Sukuu": 君を掬う
+  "Kimishidai Ressha": キミシダイ列車
   "Kokoro Kaleidoscope": ココロカレイドスコープ
+  Kokoronashi: 心做し
   "Kotobano Iranai Yakusoku (feat. Sana)": 言葉のいらない約束
   Kousui: 香水
   kyoukaisen: 境界線
@@ -665,13 +702,16 @@ simple:
   "Moshimo inochiga egaketara": もしも命が描けたら
   "Mou sukoshi dake": もう少しだけ
   "Nandemonaiya (Movie Edit.)": なんでもないや - Movie Edit.
+  "NANIMONO (feat. Kenshi Yonezu)": NANIMONO (feat. 米津玄師)
   "Niji No Kanatani": 虹の彼方に
   "Ningen Gokko": 人間ごっこ
   "Noraneko Wa Uchu O Mezashita": 野良猫は宇宙を目指した
+  Oikaze: 追い風
   "Oikaze, Bokura Wa Yuku": 追風、僕らは征く
   Ryureirinbu: 流麗凛舞
   Sayonaranomaeni: さよならの前に
   sayonarawoietakana: さよならを言えたかな
+  Senkou: 閃光
   Shiori: 栞
   "shiroiro kagerou": 白色蜉蝣
   Shirushi: シルシ
@@ -691,10 +731,13 @@ simple:
   "Tsubame (feat. midories)": ツバメ (feat. ミドリーズ)
   Tsumugu: 紡ぐ
   "Uma to Shika": 馬と鹿
+  Usotsuki: 嘘つき
   Wagamama: ワガママ
   "Watariboshi (feat. Sando Aoi & Younagi Yoru)": 渉り星 (feat. Sando Aoi & 夕凪夜)
   WASURENA: 勿忘
   "Yasashii Hito": 優しい人
+  "Yonaga Uta": 夜永唄
+  "Yorokobi No Hi": 歓びの陽
   "Yoru ni kakeru": 夜に駆ける
   "Zenzenzense - Movie Ver.": 前前前世 (movie ver.)
   不打扰: 不打擾

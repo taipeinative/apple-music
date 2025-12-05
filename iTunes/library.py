@@ -83,6 +83,7 @@ class Library:
             data['Sub Genres'] = data.get('Third Level', data['Sub Genres'])
             
         data['Sub Tags'] = data.apply(to_tuple, axis = 1)
+        data['Total Time'] = pd.to_timedelta(data['Total Time'])
         return Library(data[column_sets].copy())
 
     @classmethod
@@ -597,21 +598,22 @@ class Library:
         excel['Artist'] = excel['Artist'].apply(lambda x: ', '.join(x))
         excel['Play Count'] = excel['Play Count'].astype(int)
         excel['Tags'] = excel['Tags'].apply(lambda x: ', '.join(sorted(x)))
+        excel['Total Time'] = excel['Total Time'].astype(str)
         excel['Year'] = excel['Year'].astype(int)
 
         if 'Sub Tags' not in excel.columns:
             empty = pd.Series([nan] * len(excel))
-            excel['Sub Tag 1'] = empty
-            excel['Sub Tag 2'] = empty
-            excel['Sub Tag 3'] = empty
+            excel['Sub Tag 1'] = excel['Sub Tag 1'] if ('Sub Tag 1' in excel.columns) else empty
+            excel['Sub Tag 2'] = excel['Sub Tag 2'] if ('Sub Tag 2' in excel.columns) else empty
+            excel['Sub Tag 3'] = excel['Sub Tag 3'] if ('Sub Tag 3' in excel.columns) else empty
         
         else:
             excel['Sub Tag 1'] = excel['Sub Tags'].apply(lambda x: x[0] if isinstance(x, list) else nan)
             excel['Sub Tag 2'] = excel['Sub Tags'].apply(lambda x: x[1] if isinstance(x, list) else nan)
             excel['Sub Tag 3'] = excel['Sub Tags'].apply(lambda x: x[2] if isinstance(x, list) else nan)
         
-        excel = excel.sort_values(['Play Count', 'Artist', 'Name'], ascending = [False, True, True], ignore_index = True).loc[:, ['Vocal', 'Language', 'Sub Genres', 'Sub Tag 1', 'Sub Tag 2', 'Sub Tag 3', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Play Count', 'Disc Number', 'Track Number', 'Tags']]
-        excel.to_excel(path, sheet_name = str(sheet))
+        excel = excel.sort_values(['Play Count', 'Artist', 'Name'], ascending = [False, True, True], ignore_index = True).loc[:, ['Track ID', 'Vocal', 'Language', 'Sub Genres', 'Sub Tag 1', 'Sub Tag 2', 'Sub Tag 3', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Play Count', 'Disc Number', 'Track Number', 'Tags', 'Date Added', 'Date Modified', 'Size', 'Total Time']]
+        excel.to_excel(path, sheet_name = str(sheet), index = False)
 
     def to_msgpack(self: 'Library',
                    path: str | bytes | os.PathLike[str]) -> None:
