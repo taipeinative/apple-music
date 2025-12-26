@@ -129,3 +129,14 @@ print(lib3)
 ```
 
 iTunes Library <2524 tracks>
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <div style="text-align: left;">
+    ◂ <a href="./cleaning.md">Cleaning library</a>
+  </div>
+  <div style="text-align: right;">
+    <a href="./mapping.md">Mapping Apple Music data</a> ▸
+  </div>
+</div>

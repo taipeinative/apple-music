@@ -78,3 +78,11 @@ The cleaned data is exported for further analysis.
 ```python
 lib.to_msgpack(r'.\data\lib-cln.msgpack')
 ```
+
+---
+
+<div style="display: flex; justify-content: right;">
+  <div style="text-align: right;">
+    <a href="./merging.md">Merging library</a> ▸
+  </div>
+</div>
