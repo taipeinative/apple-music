@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .utils import Utils
 from collections import abc, defaultdict
 from datetime import timedelta
@@ -58,7 +60,7 @@ class Library:
             return row['Sub Tag 1'], row['Sub Tag 2'], row['Sub Tag 3']
         
         legacy_columns = ['Top Level', 'Second Level', 'Third Level']
-        column_sets = ['Track ID', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Date Modified', 'Date Added', 'Play Count', 'Size', 'Total Time', 'Disc Number', 'Track Number', 'Vocal', 'Language', 'Sub Genres', 'Sub Tags']
+        column_sets = ['Track ID', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Date Modified', 'Date Added', 'Play Count', 'Size', 'Total Time', 'Disc Number', 'Track Number', 'Tags', 'Vocal', 'Language', 'Sub Genres', 'Sub Tags', 'ISRC', 'Apple ID']
         data = pd.read_excel(path, sheet_name = sheet, header = 0)
 
         if len(set(legacy_columns) & set(data.columns)) > 0:
@@ -71,7 +73,9 @@ class Library:
                 'Size': 'int64',
                 'Total Time': 'timedelta64[ns]',
                 'Disc Number': 'int64',
-                'Track Number': 'int64'
+                'Track Number': 'int64',
+                'ISRC': 'object',
+                'Apple ID': 'float64'
             })
 
             data.rename(columns = {'Artists': 'Artist'}, errors = 'ignore', inplace = True)
@@ -81,9 +85,30 @@ class Library:
             data['Vocal'] = data.get('Top Level', data['Vocal'])
             data['Language'] = data.get('Second Level', data['Language'])
             data['Sub Genres'] = data.get('Third Level', data['Sub Genres'])
-            
+        
+        missing_cols = set(column_sets) - set(data.columns)
+        if len(missing_cols) > 0:
+            for column in missing_cols:
+                data[column] = pd.Series()
+                if column in ['Track ID', 'Year', 'Play Count', 'Size', 'Disc Number', 'Track Number', 'Apple ID']:
+                    try:
+                        data[column].astype('int64')
+                    except:
+                        data[column].astype('float64')
+                if column in ['Date Modified', 'Date Added']:
+                    data[column].astype('datetime64[ns]')
+                if column in ['Total Time']:
+                    data[column].astype('timedelta64[ns]')
+
         data['Sub Tags'] = data.apply(to_tuple, axis = 1)
         data['Total Time'] = pd.to_timedelta(data['Total Time'])
+
+        excessive_columns = set(data.columns) - set(column_sets)
+        if 'ISRC' in excessive_columns:
+            column_sets.append('ISRC')
+        if 'Apple ID' in excessive_columns:
+            column_sets.append('Apple ID')
+
         return Library(data[column_sets].copy())
 
     @classmethod
@@ -191,7 +216,7 @@ class Library:
     def merge(cls, prev: 'Library', next: 'Library | None' = None,
               artist_map: dict[str, str | list[str]] = {},
               artists_with_comma: list[str] = [],
-              name_map: dict[str, dict[str, str] | list[dict[str, str | list[str]]]] = {}) -> LibraryMerger:
+              name_map: dict[str, dict[str, str] | list[dict[str, str | list[str]]]] = {}) -> 'LibraryMerger':
         '''
         Try to merge two iTunes libraries.
         '''
@@ -298,8 +323,8 @@ class Library:
         if name_map.get('simple'):
             replacer = name_map['simple']
             assert isinstance(replacer, dict)
-            next_df['Name'].replace(replacer, inplace = True)
-            prev_df['Name'].replace(replacer, inplace = True)
+            next_df.replace({'Name': replacer}, inplace = True)
+            prev_df.replace({'Name': replacer}, inplace = True)
 
         if multiple_libs:
             merged = prev_df.merge(
@@ -456,7 +481,7 @@ class Library:
         else:
             raise ValueError('The library is corrupted.')
 
-    def nested_artists(self: 'Library', table: dict[str, str | list[str]] = {}, artists_with_comma: list[str] = []) -> 'Library':
+    def nested_artists(self: 'Library', table: dict[str, str | list[str]] = {}, artists_with_comma: list[str] = [], detect_feat: bool = True) -> 'Library':
         if not self.is_valid():
             raise ValueError('The library is corrupted.')
         
@@ -466,7 +491,7 @@ class Library:
 
             if isinstance(artist_field, str) and isinstance(title_field, str):
                 main = split_artist(artist_field)
-                feat = extract_feat_artist(title_field)
+                feat = extract_feat_artist(title_field) if detect_feat else []
                 mapped = []
                 for artist in main + feat:
                     mapped_artist = table.get(artist, artist)
@@ -512,12 +537,13 @@ class Library:
 
         def protect_comma(artist: str) -> str:
             for case in artists_with_comma:
+                artist = artist.replace(case, case.replace('&', '<AMPERSAND>'))
                 artist = artist.replace(case, case.replace(',', '<COMMA>'))
             return artist
 
         def split_artist(artist: str) -> list[str]:
             artist_str = protect_comma(artist).replace(' & ', ', ')
-            return [name.strip().replace('<COMMA>', ',') for name in artist_str.split(',')]
+            return [name.strip().replace('<AMPERSAND>', '&').replace('<COMMA>', ',') for name in artist_str.split(',')]
 
         new_lib = self.copy()
         new_lib.__df__['Artist'] = new_lib.__df__.apply(extract_artists, axis = 1)
@@ -586,7 +612,8 @@ class Library:
     
     def to_excel(self: 'Library',
                  path: str | bytes | os.PathLike[str],
-                 sheet: int | str = 0) -> None:
+                 sheet: int | str = 0,
+                 sort: bool = True) -> None:
         '''
         Export the library to a Microsoft Excel file.
         '''
@@ -594,10 +621,16 @@ class Library:
         if not self.is_valid():
             raise ValueError('The library is corrupted.')
         
+        def apply_tags(value) -> str:
+            if isinstance(value, abc.Iterable):
+                return ', '.join(sorted(value))
+            else:
+                return str(value)
+
         excel = self.__df__.copy()
         excel['Artist'] = excel['Artist'].apply(lambda x: ', '.join(x))
         excel['Play Count'] = excel['Play Count'].astype(int)
-        excel['Tags'] = excel['Tags'].apply(lambda x: ', '.join(sorted(x)))
+        excel['Tags'] = excel['Tags'].apply(lambda x: apply_tags(x))
         excel['Total Time'] = excel['Total Time'].astype(str)
         excel['Year'] = excel['Year'].astype(int)
 
@@ -608,11 +641,18 @@ class Library:
             excel['Sub Tag 3'] = excel['Sub Tag 3'] if ('Sub Tag 3' in excel.columns) else empty
         
         else:
-            excel['Sub Tag 1'] = excel['Sub Tags'].apply(lambda x: x[0] if isinstance(x, list) else nan)
-            excel['Sub Tag 2'] = excel['Sub Tags'].apply(lambda x: x[1] if isinstance(x, list) else nan)
-            excel['Sub Tag 3'] = excel['Sub Tags'].apply(lambda x: x[2] if isinstance(x, list) else nan)
+            excel['Sub Tag 1'] = excel['Sub Tags'].apply(lambda x: x[0] if isinstance(x, list) or isinstance(x, tuple) else nan)
+            excel['Sub Tag 2'] = excel['Sub Tags'].apply(lambda x: x[1] if isinstance(x, list) or isinstance(x, tuple) else nan)
+            excel['Sub Tag 3'] = excel['Sub Tags'].apply(lambda x: x[2] if isinstance(x, list) or isinstance(x, tuple) else nan)
         
-        excel = excel.sort_values(['Play Count', 'Artist', 'Name'], ascending = [False, True, True], ignore_index = True).loc[:, ['Track ID', 'Vocal', 'Language', 'Sub Genres', 'Sub Tag 1', 'Sub Tag 2', 'Sub Tag 3', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Play Count', 'Disc Number', 'Track Number', 'Tags', 'Date Added', 'Date Modified', 'Size', 'Total Time']]
+        fin_cols = ['Track ID', 'Vocal', 'Language', 'Sub Genres', 'Sub Tag 1', 'Sub Tag 2', 'Sub Tag 3', 'Name', 'Artist', 'Composer', 'Album', 'Genre', 'Year', 'Play Count', 'Disc Number', 'Track Number', 'Tags', 'Date Added', 'Date Modified', 'Size', 'Total Time']
+        if 'ISRC' in excel.columns:
+            fin_cols.append('ISRC')
+        if 'Apple ID' in excel.columns:
+            fin_cols.append('Apple ID')
+        excel = excel.loc[:, fin_cols]
+        if sort:
+            excel = excel.sort_values(['Play Count', 'Artist', 'Name'], ascending = [False, True, True], ignore_index = True)
         excel.to_excel(path, sheet_name = str(sheet), index = False)
 
     def to_msgpack(self: 'Library',
